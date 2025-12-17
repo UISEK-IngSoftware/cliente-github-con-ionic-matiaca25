@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import './Tab1.css';
 import RepoItem from '../components/RepoItem';
-import { RepositoryItem } from '../interfaces/RepositoryItem';
+import { RepositoryItem } from '../Interfaces/RepositoryItem';
 import { fetchRepositories } from '../services/GithubService';
 
 const Tab1: React.FC = () => {
