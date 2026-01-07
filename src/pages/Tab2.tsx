@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from 
 import { IonInput,IonTextarea } from '@ionic/react';
 import './Tab2.css';
 import { useHistory } from 'react-router';
-import { RepositoryItem } from '../interfaces/RepositoryItem';
+import { RepositoryItem } from '../Interfaces/RepositoryItem';
 import { create, save } from 'ionicons/icons';
 import { createRepository } from '../services/GithubService';
 

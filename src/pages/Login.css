@@ -1,0 +1,46 @@
+:root{
+  --login-max-width: 520px;
+}
+
+.login-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height: calc(100vh - 56px);
+  max-width: var(--login-max-width);
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.login-logo{
+  font-size: 72px;
+  color: var(--ion-color-primary, #3880ff);
+  margin-bottom: 18px;
+  width:72px;
+  height:72px;
+  display:block;
+}
+
+.login-form{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.login-field{
+  width:100%;
+}
+
+.login-hint{
+  margin-top:12px;
+  text-align:center;
+}
+
+/* Make inputs visually larger on desktop */
+@media(min-width:600px){
+  .login-logo{ font-size:80px; }
+  .login-container{ padding:32px; }
+}
