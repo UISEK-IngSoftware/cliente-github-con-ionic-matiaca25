@@ -33,13 +33,20 @@ export const fetchRepositories = async (): Promise<RepositoryItem[]> => {
                 affiliation: "owner",
             }
         });
-        const repositories: RepositoryItem[]= response.data.map((repo: any) => ({
+        type GitHubRepo = {
+            name: string;
+            description?: string | null;
+            owner?: { avatar_url?: string; login?: string } | null;
+            language?: string | null;
+        };
+
+        const repositories: RepositoryItem[]= response.data.map((repo: GitHubRepo) => ({
 
             name: repo.name,
-            description:repo.description ? repo.description : null,
-            imageUrl: repo.owner ? repo.owner.avatar_url : null,
-            owner: repo.owner ? repo.owner.login : null,    
-            languaje: repo.language ? repo.language : null,
+            description: repo.description ? repo.description : null,
+            imageUrl: repo.owner ? repo.owner.avatar_url || null : null,
+            owner: repo.owner ? repo.owner.login || null : null,
+            language: repo.language ? repo.language : null,
 
         }));
         return repositories;
@@ -74,5 +81,32 @@ export const createRepository = async (repo: RepositoryItem): Promise<void> => {
                 avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_eN9ltaN4YL-7g4jrTdTXHsBUf_bWxQ_cSg&s',
         }
             return userNotFound;
+    }
+};
+
+
+export const updateRepository = async (owner: string, repoName: string, data: { name?: string; description?: string | null }): Promise<boolean> => {
+    try {
+        const payload: Record<string, string | null> = {};
+        if (data.name !== undefined) payload.name = data.name;
+        if (data.description !== undefined) payload.description = data.description;
+
+        const response = await githubApi.patch(`/repos/${owner}/${repoName}`, payload);
+        console.log('Repositorio actualizado', response.data);
+        return true;
+    } catch (error) {
+        console.error('Error al actualizar repositorio', error);
+        return false;
+    }
+};
+
+export const deleteRepository = async (owner: string, repoName: string): Promise<boolean> => {
+    try {
+        await githubApi.delete(`/repos/${owner}/${repoName}`);
+        console.log('Repositorio eliminado', `${owner}/${repoName}`);
+        return true;
+    } catch (error) {
+        console.error('Error al eliminar repositorio', error);
+        return false;
     }
 };
